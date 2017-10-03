@@ -1,3 +1,4 @@
 django_simple_forum/static/
 .idea/
 *.pyc
+django_simple_forum/media/
