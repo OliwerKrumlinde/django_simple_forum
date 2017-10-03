@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row col-md-12 col-md-offset-0 custyle">
+        {% for main_section in main_sections %}
+        <h3>{{ main_section.name }}</h3>
+    <table class="table table-striped custab" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>pic</th>
+            <th>Title</th>
+            <th>Last activity</th>
+            <th>Threads</th>
+            <th>Posts</th>
+            <th>Views</th>
+        </tr>
+    </thead>
+            {% for section in main_section.get_sections %}
+            <tr>
+                <td>smallpic</td>
+                <td><a href="{% url 'section_page' section.id %}"> {{ section.title }}</a></td>
+                <td>
+                    <a href="{% url 'thread_page' section.get_latest_post_activity.thread.id %}">
+                        {{ section.get_latest_post_activity.thread.name }}</a><br>
+                    By {{ section.get_latest_post_activity.user.get_username }} at {{ section.get_latest_post_activity.created_date }}
+                </td>
+                <td>{{ section.get_total_threads }}</td>
+                <td>{{ section.get_total_posts }}</td>
+                <td>{{ section.get_total_views }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

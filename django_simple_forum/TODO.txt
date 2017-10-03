@@ -1,0 +1,17 @@
+[X]  - Create thread page
+[X]  - Implement editor - CKeditor??
+[X]  - Create new thread page
+[X]  - Being able to post to a thread
+[X]  - Implement jquery
+[]  - Add last edit field in post model
+[X]  - Edit post
+[]  - Up-vote and show summary on post
+[]  - Register
+[]  - Login
+[]  - Create profile page
+[]  - Create view all threads by user page
+[]  - Create view all posts by user page
+[]  - Create actions for the dropdown over profile info in the thread page (see profile, see threads, posts and overview)
+[]  - Pagination for threads and posts
+[]  - Display attached files?
+[]  - Count views

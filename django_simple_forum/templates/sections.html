@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row col-md-12 col-md-offset-0 custyle">
+        <h3>{{ section.title }}</h3>
+        <h5>{{ section.comment }}</h5>
+        <a href="{% url 'thread_create' section.id %}" class="btn btn-primary btn-xs pull-right"><b>+</b> New thread</a>
+    <table class="table table-striped custab" style="margin-top: 40px;">
+    <thead>
+        <tr>
+            <th>pic</th>
+            <th>Title</th>
+            <th>Last activity</th>
+            <th>Answers</th>
+            <th>Views</th>
+        </tr>
+    </thead>
+            {% for thread in threads %}
+            <tr>
+                <td>smallpic</td>
+                <td>
+                    <a href="{% url 'thread_page' thread.id %}">{{ thread.name }}</a> </br>
+                    {{ thread.owner.get_username }}
+                </td>
+                <td>{{ thread.get_latest_post_activity.created_date }}</td>
+                <td>1</td>
+                <td>{{ thread.views }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+    </div>
+</div>
+{% endblock content %}

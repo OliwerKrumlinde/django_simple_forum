@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container">
+	<section class="row clearfix post_box" id="top-post">
+		<section class="col-md-12 column">
+        <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<section class="panel-title">
+                      <time class="pull-right">
+                      {{ thread.created_date }}
+                      </time>
+                      <section class="pull-left" id="id">
+                        <abbr title="count of posts in this topic">#{{ thread.get_first_post.id }}</abbr>
+                      </section>
+					</section>
+				</div>
+				<section class="row panel-body">
+					<section class="col-md-9">
+                      <h3> <i class="fa fa-smile-o"></i> {{ thread.name }}</h3>
+                      <hr>
+                        {{ thread.get_first_post.comment|safe }}
+                  </section>
+                  
+                  <section id="user-description" class="col-md-3 ">
+                    	<section class="well">
+                    <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cricle"></i>{{ thread.get_first_post.user.get_username }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#"><i class="fa fa-user"></i> See profile</a></li>
+                      <li><a href="#"><i class="fa fa-envelope"></i> Send PM</a></li>
+                      <li><a href="#"><i class="fa fa-code"></i>View all Articles</a></li>
+                      <li><a href="#"><i class="fa fa-th-list"></i>View all Posts</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#"><i class="fa fa-plus"></i>Add to contact List</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#"><i class="fa fa-cogs"></i> Manage User (for adminstrator)</a></li>
+                    </ul>
+       			 </div>
+                          <figure>
+                            <img class="img-rounded img-responsive" src="{{thread.owner.avatar.url}}" >
+                            <figcaption class="text-center">مدیر کل سایت <br><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half"></i> </figcaption>
+                          </figure>
+                          <dl class="dl-horizontal">
+                            <dt>Joined date:</dt>
+                            <dd>{{ thread.get_first_post.user.user.date_joined|date:"M d, Y" }}</dd>
+                            <dt>Posts:</dt>
+                            <dd>785</dd>
+                            <dt>Reputation:</dt>
+                            <dd>+89</dd>
+						</dl>
+                    	</section>
+                  </section>
+                  
+				</section>
+				<div class="panel-footer">
+                  <div class="row">
+					<section class="col-md-2 ">
+                      <i class="fa fa-thumbs-up "></i><a href="#"> Thanks </a>| <i class="fa fa-warning "></i><a href="#"> Report </a>
+                    </section>
+                  	<section id="thanks" class="col-md-6">
+                      <small>Up-votes: {{ thread.get_first_post.up_votes }} </small><br>
+                      
+                   </section>
+                  	<section class="col-md-4">
+                      <span class="fa-stack">
+                          <i class="fa fa-quote-right fa-stack-1x"></i>
+                          <i class="fa fa-comment-o fa-lg fa-stack-1x"></i>
+					  </span><a class="reply_post" data-target="/post/{{thread.get_first_post.id}}"> Reply </a> |
+                      <i class="fa fa-edit "></i><a data-id="{{thread.get_first_post.id}}" class="edit_post" data-url="/post/{{thread.get_first_post.id}}"> Edit Post </a>
+                    </section>
+				</div>
+               </div>
+			</div>
+		</div>
+	</div>
+		</section>
+	</section>
+</section>
+<script type="text/javascript">
+$( document ).ready(function() {
+    // Replying to a post
+    $(".reply_post").click(function(){
+        $.get( $(this).attr('data-target'), function( data ) {
+            CKEDITOR.instances["id_comment"].setData('<blockquote>' + data + '</blockquote>');
+        });
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+    });
+
+    // Editing a post
+    $(".edit_post").click(function(){
+        var data_id = $(this).attr('data-id');
+        $.get( $(this).attr('data-url'), function( data ) {
+            $("#edit_post_id").val(data_id);
+            CKEDITOR.instances["id_comment"].setData(data);
+             $("#post_submit").text("Update post")
+        });
+         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+    });
+});
+</script>
+{% include "threads_reply.html" %}
+{% endblock content %}
